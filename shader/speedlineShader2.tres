@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://b0j3yhn2471h0"]
+
+[ext_resource type="Shader" uid="uid://cpw7f6nfllq5p" path="res://shader/SpeedLinesShader.gdshader" id="1_pb4dn"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cdisy"]
+frequency = 0.15
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_78nux"]
+noise = SubResource("FastNoiseLite_cdisy")
+
+[resource]
+shader = ExtResource("1_pb4dn")
+shader_parameter/noise = SubResource("NoiseTexture2D_78nux")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_count = 2.0
+shader_parameter/line_density = 1.0
+shader_parameter/line_faloff = 1.0
+shader_parameter/mask_size = 0.1
+shader_parameter/mask_edge = 0.8
+shader_parameter/animation_speed = 20.0

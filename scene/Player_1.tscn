@@ -1,0 +1,83 @@
+[gd_scene load_steps=8 format=3 uid="uid://cnjk8l0qnyetg"]
+
+[ext_resource type="Script" uid="uid://bgtm7c3bjp7kj" path="res://scene/Player1.cs" id="1_mjuud"]
+[ext_resource type="Texture2D" uid="uid://bej53id1wg47e" path="res://texture/icon.svg" id="2_rtbl2"]
+[ext_resource type="Material" uid="uid://b0j3yhn2471h0" path="res://shader/speedlineShader2.tres" id="3_rtbl2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m7f1s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_epg1m"]
+shading_mode = 0
+albedo_texture = ExtResource("2_rtbl2")
+uv1_offset = Vector3(0.5, 0.235, 0)
+texture_filter = 0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_k3u1v"]
+material = SubResource("StandardMaterial3D_epg1m")
+
+[sub_resource type="QuadMesh" id="QuadMesh_epg1m"]
+size = Vector2(1920, 1080)
+
+[node name="ROBERT" type="CharacterBody3D" groups=["player"]]
+script = ExtResource("1_mjuud")
+dash_dur = 0.2
+dash_speed = 50.0
+air_dcc = 40.0
+max_tilt_deg = 20.0
+
+[node name="collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_m7f1s")
+
+[node name="model" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_k3u1v")
+
+[node name="camPivot" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79, 0)
+
+[node name="cam" type="Camera3D" parent="camPivot"]
+unique_name_in_owner = true
+
+[node name="rpg_pivot" type="Node3D" parent="camPivot/cam"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.9)
+
+[node name="rayR" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(1.5, 0, 0)
+
+[node name="rayL" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(-1.5, 0, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="crosshair" type="Control" parent="CanvasLayer/CenterContainer"]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/CenterContainer/crosshair"]
+self_modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_rtbl2")
+
+[node name="speedline" type="Control" parent="CanvasLayer/CenterContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="CanvasLayer/CenterContainer/speedline"]
+material = ExtResource("3_rtbl2")
+mesh = SubResource("QuadMesh_epg1m")
