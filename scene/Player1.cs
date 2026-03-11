@@ -167,9 +167,9 @@ public partial class Player1 : CharacterBody3D
 			}
 		}
 	}
-	public void jump()
+	public void jump(int dir)
 	{
-		Velocity = new Vector3(Velocity.X,jump_velocity,Velocity.Z);
+		Velocity = new Vector3(Velocity.X, jump_velocity * dir, Velocity.Z);
 		jump_to_fall = jump_gravity;
 	}
 	public Vector3 get_cam_basis()
@@ -179,9 +179,15 @@ public partial class Player1 : CharacterBody3D
 
 		return new Vector3(-Mathf.Cos(rot_y) * Mathf.Sin(rot_x), Mathf.Sin(rot_y), -Mathf.Cos(rot_y) * Mathf.Cos(rot_x));
 	}
-	public void get_hit()
+	public void get_hit(float pos_Y)
 	{
-		GD.Print(88);
+		Velocity = new Vector3(Velocity.X, 0, Velocity.Z);
+		if (GlobalPosition.Y >= pos_Y)
+		{
+			jump(1);
+			return;
+		}
+		jump(-1);
 	}
 	public override void _PhysicsProcess(double delta)
     {
@@ -218,7 +224,7 @@ public partial class Player1 : CharacterBody3D
 			air_jump_allowed=1;
 			if (Input.IsActionJustPressed("jump") || (auto_bhop && Input.IsActionPressed("jump")))
 			{
-				jump();
+				jump(1);
 			}
 			ground_physics(delta);
 		}
@@ -255,7 +261,7 @@ public partial class Player1 : CharacterBody3D
 			}
 			if (Input.IsActionJustPressed("jump") && air_jump_allowed != 0)
 			{
-				jump();
+				jump(1);
 				air_jump_allowed--;
 			}
 			air_physics(delta, input_dir.Y);

@@ -16,8 +16,9 @@ public partial class RpgManager : Node3D
         if (@event.IsActionPressed("shoot"))
 		{
 			RpgBullet bullet_ins = bullet.Instantiate<RpgBullet>();
+			GlobalPosition = player.GetNode<Node3D>("%rpg_pivot").GlobalPosition;
 			AddChild(bullet_ins);
-			bullet_ins.GlobalPosition = player.GetNode<Node3D>("%rpg_pivot").GlobalPosition;
+			//bullet_ins.GlobalPosition = player.GetNode<Node3D>("%rpg_pivot").GlobalPosition;
 			bullet_ins.dir = (Vector3)player.Call("get_cam_basis");
 		}
     }

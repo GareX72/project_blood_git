@@ -18,7 +18,7 @@ public partial class RpgBullet : Node3D
     {
         if (is_hit && body.HasMethod("get_hit"))
         {
-            body.Call("get_hit");
+            body.Call("get_hit", GlobalPosition.Y);
         }
         if (!body.IsInGroup("player")){is_hit =true;}
     }

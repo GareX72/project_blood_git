@@ -1,24 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://c50n5m3jpo2x0"]
+[gd_scene load_steps=21 format=3 uid="uid://c50n5m3jpo2x0"]
 
 [ext_resource type="Script" uid="uid://dx68cl8t4ggxq" path="res://scene/RpgBullet.cs" id="1_2o4bt"]
 [ext_resource type="Texture2D" uid="uid://dv0ygr8lmkf6b" path="res://texture/Flare00.PNG" id="2_2qkpi"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2qkpi"]
-cull_mode = 1
-shading_mode = 0
-albedo_color = Color(1, 0.117647, 0, 1)
-grow = true
-grow_amount = 0.2
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2o4bt"]
-next_pass = SubResource("StandardMaterial3D_2qkpi")
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_2qkpi"]
-material = SubResource("StandardMaterial3D_2o4bt")
-radial_segments = 8
-rings = 4
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_toegr"]
 
@@ -119,10 +102,6 @@ scale_curve = SubResource("CurveTexture_6ajd2")
 [node name="rpg_bullet" type="Node3D"]
 script = ExtResource("1_2o4bt")
 time = 4.0
-
-[node name="bullet" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("SphereMesh_2qkpi")
 
 [node name="hitbox" type="Area3D" parent="."]
 
